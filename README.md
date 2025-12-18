@@ -1,10 +1,18 @@
 # Procediverso
 
+Experiencia de exploración de escenarios creados proceduralmente, desarrollada en el marco de mi tesis de grado para oculus quest 2, en el motor Unity3D.
+
+Programación en Unity partiendo de un proyecto de código abierto, implementación de plugin XR, desarrollo de assets 2D en Illustrator, Photoshop, Blender y Reaper.
+
 Gestada en el marco de la cursada de de Taller Diseño Multimedial 5, en la Facultad de Artes de la UNLP en el año 2023, como tesina de grado para la licenciatura en diseño multimedia, Procediverso se desarrolló partiendo de mis inquietudes por el arte generativo y el diseño de escenarios para videojuegos, para finalizar siendo montada y exhibida en el Festival Artimañas, realizado en diciembre del mismo año de manera abierta y gratuita, en la Sede Fonseca de la Facultad de Artes.
 
 Siempre con el foco en los en los entornos virtuales y cómo nos vinculamos con ellos, se desarrolló para el medio de realidad virtual a través de Unity, para potenciar su factor inmersivo al tratarse de una experiencia de exploración surrealista.
 
-Lee mas sobre Procediverso y su desarrollo [AQUI](https://procediweb.netlify.app/) o en mi [PORTFOLIO](https://alvaroperezdominguezportfolio.netlify.app/001-procediverso)
+Podes acceder al mismo en su itchio [alvaropd.itch.io/procediverso](https://alvaropd.itch.io/procediverso)
+
+Lee mas sobre Procediverso y su desarrollo [AQUI](https://procediweb.netlify.app/)
+
+Y podes ver más de mi trabajo en mi portfolio, funcionando en [decapodoportfolio.netlify.app](https://decapodoportfolio.netlify.app/)
 
 Proyecto de Unity basado en el proyecto de código abierto [Wave Function Collapse](https://github.com/marian42/wavefunctioncollapse) de Marian Kleineberg.
 
