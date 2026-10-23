@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -20,6 +20,7 @@ public class ColisionPilarBlanco : MonoBehaviour
     public List<CubeRotation> objetosRotacion; // Lista de objetos CubeRotation a afectar
 
     private static int contadorCopias = 0; // Variable estática para el contador de copias
+    private MaterialManager materialManager;
 
     private bool colisionOcurrida = false; // Variable para verificar si la colisión con el clon ya ha ocurrido
 
@@ -39,24 +40,11 @@ public class ColisionPilarBlanco : MonoBehaviour
         objetosRotacion.AddRange(rotationObjects);
 
 
-    }
-
-    void update() {
-        // Buscar todos los objetos en la escena que tengan el componente BrilloPeriferia adjunto
-        BrilloPeriferia[] brilloPeriferiaObjects = FindObjectsOfType<BrilloPeriferia>();
-        // Limpiar la lista antes de agregar nuevamente los objetos
-        objetosBrillo.Clear();
-        // Agregar los objetos encontrados a la lista objetosBrillo
-        objetosBrillo.AddRange(brilloPeriferiaObjects);
-
-
-        // Buscar todos los objetos en la escena que tengan el componente CubeRotation adjunto
-        CubeRotation[] rotationObjects = FindObjectsOfType<CubeRotation>();
-        // Limpiar la lista antes de agregar nuevamente los objetos
-        objetosRotacion.Clear();
-        // Agregar los objetos encontrados a la lista objetosRotacion
-        objetosRotacion.AddRange(rotationObjects);
-
+        // Cachear referencia a MaterialManager si no esta asignada
+        if (materialManager == null)
+        {
+            materialManager = FindObjectOfType<MaterialManager>();
+        }
     }
 
     private void OnEnable()
@@ -227,7 +215,17 @@ public class ColisionPilarBlanco : MonoBehaviour
         //     Debug.LogWarning("La referencia a la lista de objetos BrilloPeriferia no está asignada en el Inspector.");
         // }
 
-        GameObject cubeMaterialManager = GameObject.Find("CubeMaterialManager");
-        cubeMaterialManager.GetComponent<MaterialManager>().AumentarIntensidad();
+        if (materialManager != null)
+        {
+            materialManager.AumentarIntensidad();
+        }
+        else
+        {
+            materialManager = FindObjectOfType<MaterialManager>();
+            if (materialManager != null)
+            {
+                materialManager.AumentarIntensidad();
+            }
+        }
     }
 }

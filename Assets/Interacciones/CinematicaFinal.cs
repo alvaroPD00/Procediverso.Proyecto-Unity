@@ -8,15 +8,15 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class CinematicaFinal : MonoBehaviour
 {
-    private Vector3 posicionInicialJugador; // La posición inicial del jugador
-    private Vector3 posicionFinalJugador; // La posición final del jugador (posición del objeto mesh)
+    private Vector3 posicionInicialJugador; // La posiciÃ³n inicial del jugador
+    private Vector3 posicionFinalJugador; // La posiciÃ³n final del jugador (posiciÃ³n del objeto mesh)
     private bool movimientoIniciado = false; // Controla si el movimiento se ha iniciado
     private GameObject audioSourceObjeto; // Variable para almacenar el objeto con el AudioSource
 
     [Header("Objetos")]
-    public Transform objetoMesh; // El objeto mesh al que el jugador se moverá
+    public Transform objetoMesh; // El objeto mesh al que el jugador se moverÃ¡
     public Material skyboxMaterial; // Material del skybox
-    public AudioSource audioSource; // Aquí asigna el AudioSource que quieres modificar
+    public AudioSource audioSource; // AquÃ­ asigna el AudioSource que quieres modificar
     public Light directionalLight; // Asigna la Directional Light en el Inspector
     public PostProcessProfile postProcessProfile; // Asigna el perfil de Post-Processing en el Inspector
     public Material manosMaterial;
@@ -29,7 +29,7 @@ public class CinematicaFinal : MonoBehaviour
     private float targetIntensity = 0f; // Intensidad objetivo
 
     [Header("Variables de tiempo")]
-    public float duracionMovimiento = 2.0f; // Duración en segundos del movimiento
+    public float duracionMovimiento = 2.0f; // DuraciÃ³n en segundos del movimiento
     public float resta = 1.0f;
     private float tiempoPasado = 0.0f; // Tiempo transcurrido
 
@@ -56,8 +56,8 @@ public class CinematicaFinal : MonoBehaviour
     private float initialSunSize;
     private float targetSunSize = 0f;
 
-    private float initialExposure; // Exposición inicial del skybox
-    private float targetExposure = 0f; // Exposición objetivo
+    private float initialExposure; // ExposiciÃ³n inicial del skybox
+    private float targetExposure = 0f; // ExposiciÃ³n objetivo
 
     [Header("Audio")]
     public float pitchInicial = 1.0f; // Pitch inicial del AudioSource
@@ -70,57 +70,56 @@ public class CinematicaFinal : MonoBehaviour
     {
         Debug.Log("detonando cinematica");
 
-        // Iniciar el movimiento desde la posición actual del jugador
+        // Iniciar el movimiento desde la posiciÃ³n actual del jugador
         posicionInicialJugador = transform.position;
 
-        // Calcular la posición final del jugador (posición del objeto mesh)
+        // Calcular la posiciÃ³n final del jugador (posiciÃ³n del objeto mesh)
         posicionFinalJugador = objetoMesh.position;
         posicionFinalJugador.y -= resta;
         posicionFinalJugador.x -= resta;
         movimientoIniciado = true;
 
-        // Configurar el pitch del AudioSource
-        audioSource.pitch = pitchInicial;
-
-        // Buscar el objeto que contiene el AudioSource
+        // Buscar el objeto que contiene el AudioSource y cachear su componente
         audioSourceObjeto = GameObject.Find("PilarNegro");
-        // Obtener el componente AudioSource
-        audioSource = GetComponent<AudioSource>();
-
-        // Obtener la intensidad inicial de la Directional Light
-        if (directionalLight != null)
+        if (audioSourceObjeto != null)
         {
-            initialIntensity = directionalLight.intensity;
+            audioSource = audioSourceObjeto.GetComponent<AudioSource>();
         }
         else
         {
-            Debug.LogError("No se encontró una Directional Light. Asegúrate de asignar una en el Inspector.");
+            audioSource = GetComponent<AudioSource>();
+        }
+
+        // Inicializar el pitch en su valor inicial al comenzar la cinematica
+        if (audioSource != null)
+        {
+            audioSource.pitch = pitchInicial;
         }
 
        skyboxMaterial = RenderSettings.skybox;
         if (skyboxMaterial != null)
         {
-            // Guarda la exposición inicial del skybox
+            // Guarda la exposiciÃ³n inicial del skybox
             initialExposure = RenderSettings.skybox.GetFloat("_Exposure");
             initialSunSize = RenderSettings.skybox.GetFloat("_SunSize");
 
 }
         else
         {
-            Debug.LogError("No se encontró un material de skybox. Asegúrate de asignar uno en el Inspector.");
+            Debug.LogError("No se encontrÃ³ un material de skybox. AsegÃºrate de asignar uno en el Inspector.");
         }
 
 
         
         if (manosMaterial != null)
         {
-            // Guarda la exposición inicial de las manos
+            // Guarda la exposiciÃ³n inicial de las manos
          manosInicial = manosMaterial.color;
 
         }
         else
         {
-            Debug.LogError("No se encontró un material de las manos. Asegúrate de asignar uno en el Inspector.");
+            Debug.LogError("No se encontrÃ³ un material de las manos. AsegÃºrate de asignar uno en el Inspector.");
         }
 
 
@@ -133,7 +132,7 @@ public class CinematicaFinal : MonoBehaviour
         }
         else
         {
-            Debug.LogError("No se encontraron configuraciones de ColorGrading en el perfil de Post-Processing. Asegúrate de que estén configuradas.");
+            Debug.LogError("No se encontraron configuraciones de ColorGrading en el perfil de Post-Processing. AsegÃºrate de que estÃ©n configuradas.");
         }
 
         // Obtener las configuraciones de ColorGrading del perfil de Post-Processing
@@ -146,7 +145,7 @@ public class CinematicaFinal : MonoBehaviour
         }
         else
         {
-            Debug.LogError("No se encontraron configuraciones de ambientOcclusion en el perfil de Post-Processing. Asegúrate de que estén configuradas.");
+            Debug.LogError("No se encontraron configuraciones de ambientOcclusion en el perfil de Post-Processing. AsegÃºrate de que estÃ©n configuradas.");
         }
 
 
@@ -156,11 +155,11 @@ public class CinematicaFinal : MonoBehaviour
     void Start()
     {
         // Obtener todas las luces en la escena
-        Light[] lights = FindObjectsOfType<Light>();
+        // Luces no requeridas en Start
 
         Color targetcolor = Random.ColorHSV(0f, 0.000001f, 0f, 0.000001f, 0f, 0.000001f);
 
-        // Restringir el valor de pitchInicial a un rango válido
+        // Restringir el valor de pitchInicial a un rango vÃ¡lido
         pitchInicial = Mathf.Clamp(pitchInicial, 0.1f, 3.0f);
         audioSource.pitch = pitchInicial;
 
@@ -177,16 +176,16 @@ public class CinematicaFinal : MonoBehaviour
             // Actualizar el tiempo transcurrido
             tiempoPasado += Time.deltaTime;
 
-            // Calcular el valor "t" para la interpolación
+            // Calcular el valor "t" para la interpolaciÃ³n
             float t = Mathf.Clamp01(tiempoPasado / duracionMovimiento);
 
-            // Interpolar la posición del jugador hacia la posición del objeto mesh
+            // Interpolar la posiciÃ³n del jugador hacia la posiciÃ³n del objeto mesh
             transform.position = Vector3.Lerp(posicionInicialJugador, posicionFinalJugador, t);
 
-            // Cambiar gradualmente la exposición del skybox
+            // Cambiar gradualmente la exposiciÃ³n del skybox
             if (skyboxMaterial != null)
             {
-                // Cambia gradualmente la exposición del skybox
+                // Cambia gradualmente la exposiciÃ³n del skybox
                 float newExposure = Mathf.Lerp(initialExposure, targetExposure, t);
                 RenderSettings.skybox.SetFloat("_Exposure", newExposure);
 
@@ -198,7 +197,7 @@ public class CinematicaFinal : MonoBehaviour
 
             if (manosMaterial != null)
             {
-                // Cambia gradualmente la exposición de las manos
+                // Cambia gradualmente la exposiciÃ³n de las manos
                 manosMaterial.color = Color.Lerp(manosInicial, targetcolor, t);
 
             }
@@ -212,28 +211,13 @@ public class CinematicaFinal : MonoBehaviour
             }
 
 
-            if (audioSourceObjeto != null)
+            if (audioSource != null)
             {
-                // Obtiene el componente AudioSource del objeto
-                audioSource = audioSourceObjeto.GetComponent<AudioSource>();
-
-                if (audioSource != null)
-                {
-                    // El AudioSource se encontró y la referencia es válida
-                    // Interpolar el pitch del AudioSource hacia el pitch final
-                    audioSource.pitch = Mathf.Lerp(pitchInicial, pitchFinal, t);
-                }
-                else
-                {
-                    Debug.LogError("No se encontró un componente AudioSource en el objeto " + audioSourceObjeto.name);
-                }
-            }
-            else
-            {
-                Debug.LogError("No se encontró un objeto con el nombre 'PilarNegro' en la escena.");
+                // Interpolar el pitch del AudioSource hacia el pitch final
+                audioSource.pitch = Mathf.Lerp(pitchInicial, pitchFinal, t);
             }
 
-            // Si el tiempo ha alcanzado la duración, detener el movimiento
+            // Si el tiempo ha alcanzado la duraciÃ³n, detener el movimiento
             if (t >= 1.0f)
             {
                 Debug.Log("se resuelve acercamiento");
