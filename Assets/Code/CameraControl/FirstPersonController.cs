@@ -17,8 +17,12 @@ public class FirstPersonController : MonoBehaviour
 
     // Referencias y variables privadas
     private CharacterController characterController;
-   // private Transform cameraTransform;
-   // private float cameraTilt = 0f;
+
+    //comentar desde aca para VR
+    private Transform cameraTransform;
+    private float cameraTilt = 0f;
+    //comentar hasta aca para VR
+
     public float verticalSpeed = 0f; // Controla la velocidad vertical del jugador (salto y gravedad)
     private float timeInAir = 0f; // Tiempo que el jugador ha estado en el aire después del último salto
     private bool jumpLocked = false; // Evita múltiples saltos mientras el jugador está en el aire
@@ -30,8 +34,11 @@ public class FirstPersonController : MonoBehaviour
     {
         // Obtener referencias a CharacterController y la cámara
         this.characterController = this.GetComponent<CharacterController>();
-     //   this.cameraTransform = this.GetComponentInChildren<Camera>().transform;
-       // this.cameraTilt = this.cameraTransform.localRotation.eulerAngles.x;
+
+        //comentar desde aca para VR
+        this.cameraTransform = this.GetComponentInChildren<Camera>().transform;
+        this.cameraTilt = this.cameraTransform.localRotation.eulerAngles.x;
+        //comentar hasta aca para VR
     }
 
     // Método que se ejecuta en cada frame
@@ -43,7 +50,11 @@ public class FirstPersonController : MonoBehaviour
         // Multiplicador de velocidad si el jugador está corriendo
         float runMultiplier = 1f + 2f * Input.GetAxis("Run");
 
-        /* Movimiento horizontal del jugador
+
+        //comentar desde aca para VR
+
+
+      // Movimiento horizontal del jugador
        Vector3 movementVector = this.transform.forward * Input.GetAxis("Move Y") + this.transform.right * Input.GetAxis("Move X");
 
         // Normalizar el vector de movimiento para evitar movimientos diagonales demasiado rápidos
@@ -57,11 +68,13 @@ public class FirstPersonController : MonoBehaviour
 
         // Control de la cámara: rotación horizontal y vertical
         float verticalMovement = this.transform.position.y;
-
+        
         this.transform.localRotation = Quaternion.AngleAxis(Input.GetAxis("Mouse Look X") * this.MouseSensitivity + Input.GetAxis("Look X") * this.LookSensitivity * Time.deltaTime, Vector3.up) * this.transform.rotation;
         this.cameraTilt = Mathf.Clamp(this.cameraTilt - Input.GetAxis("Mouse Look Y") * this.MouseSensitivity - Input.GetAxis("Look Y") * this.LookSensitivity * Time.deltaTime, -90f, 90f);
-        this.cameraTransform.localRotation = Quaternion.AngleAxis(this.cameraTilt, Vector3.right);*/
-        
+        this.cameraTransform.localRotation = Quaternion.AngleAxis(this.cameraTilt, Vector3.right);
+            //comentar hasta aca para VR
+
+
         // Control del salto y gravedad
         if (touchesGround)
         {
